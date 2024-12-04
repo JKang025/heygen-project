@@ -1,21 +1,21 @@
 from flask import Flask, jsonify
+from config import get_delay, get_error
 import time
 import os
 import random
 
 app = Flask(__name__)
 
-# Configuration from environment variables
-app.config['DELAY'] = float(os.environ.get('DELAY', '10.0'))  # Delay in seconds before status becomes 'completed'
-app.config['ERROR_RATE'] = float(os.environ.get('ERROR_RATE', '0.0'))  # Probability of returning 'error'
 
-# Record the start time
+app.config['DELAY'] = get_delay() # Default: 10.0s 
+app.config['ERROR'] = get_error() # Default: p(error) = 0
+
 app.config['START_TIME'] = time.time()
 
 @app.route('/status', methods=['GET'])
 def status():
     # Simulate error based on ERROR_RATE
-    if random.random() < app.config['ERROR_RATE']:
+    if app.config['ERROR']:
         result = 'error'
     else:
         elapsed_time = time.time() - app.config['START_TIME']
