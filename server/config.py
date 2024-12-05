@@ -1,11 +1,11 @@
 import random
 
 DELAY_CONFIG = {
-    'model': 'fixed',  # Choose between 'fixed', 'uniform', or 'gaussian'
+    'model': 'uniform',  # Choose between 'fixed', 'uniform', or 'gaussian'
     'params': {
-        'delay': 10.0,  # Used for 'fixed'
-        'min_delay': 5.0,  # Used for 'uniform'
-        'max_delay': 15.0,  # Used for 'uniform'
+        'delay': 20.0,  # Used for 'fixed'
+        'min_delay': 15.0,  # Used for 'uniform'
+        'max_delay': 30.0,  # Used for 'uniform'
         'mean_delay': 10.0,  # Used for 'gaussian'
         'stddev_delay': 2.0,  # Used for 'gaussian'
     }
@@ -23,7 +23,7 @@ def get_delay():
     elif delay_model == 'uniform':
         min_delay = params.get('min_delay', 5.0)
         max_delay = params.get('max_delay', 15.0)
-        return random.uniform(min_delay, max_delay)  # Uniform distribution
+        return random.uniform(min_delay, max_delay) 
 
     elif delay_model == 'gaussian':
         mean_delay = params.get('mean_delay', 10.0)
@@ -53,18 +53,18 @@ def get_error():
 
     if error_model == 'fixed':
         probability = params.get('probability', 0.1)
-        return random.random() < probability  # Fixed error probability
+        return random.random() < probability  #
 
     elif error_model == 'uniform':
         min_probability = params.get('min_probability', 0.05)
         max_probability = params.get('max_probability', 0.15)
-        probability = random.uniform(min_probability, max_probability)  # Uniform distribution
+        probability = random.uniform(min_probability, max_probability) 
         return random.random() < probability
 
     elif error_model == 'gaussian':
         mean_probability = params.get('mean_probability', 0.1)
         stddev_probability = params.get('stddev_probability', 0.02)
-        probability = max(0, min(1, random.gauss(mean_probability, stddev_probability)))  # Gaussian distribution
+        probability = max(0, min(1, random.gauss(mean_probability, stddev_probability))) 
         return random.random() < probability
 
     else:
