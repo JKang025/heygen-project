@@ -7,7 +7,7 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 from client_library.client import VideoTranslationClient, AsyncVideoTranslationClient
 
-SERVER_START_DELAY = 3  # Time to wait for the server to start in seconds
+SERVER_START_DELAY = 3  # In seconds
 
 @pytest.fixture(scope="function")
 def start_server():
@@ -17,9 +17,9 @@ def start_server():
     server_process = subprocess.Popen(
         ["python", "server/app.py"], stdout=subprocess.PIPE, stderr=subprocess.PIPE
     )
-    time.sleep(SERVER_START_DELAY)  # Wait for the server to initialize
+    time.sleep(SERVER_START_DELAY)  
     yield
-    server_process.terminate()  # Terminate the server after the test
+    server_process.terminate()  
     server_process.wait()
 
 def test_integration_polling_expo_sync(start_server):
